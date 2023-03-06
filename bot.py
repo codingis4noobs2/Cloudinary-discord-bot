@@ -39,18 +39,37 @@ def is_verified(user, guild):
     else:
         return False
 
+def line():
+    print("__----------------------------------__\n")
+
 def coms():
-    message = "Available commands:\n"
-    message += "**`!help`**"
-    message += "**`!resize_fill width height img(as attachment)`**\n"
-    message += "**`!resize_scale width height img(as attachment)`**\n"
-    message += "**`!limit width height img(as attachment)`**\n"
-    message += "**`!crop x y width height img(as attachment)`**\n"  
-    message += "**`!blur_face img(as attachment)`**\n"
-    message += "**`!pixelate_portion x y width height img(as attachment)`**\n"
-    message += "**`!to_grayscale img(as attachment)`**\n"
-    message += "**`!add_text x y text font_size img(as attachment)`**\n"
+    message = "__-------------------------__\n"
+    message += " **Available Commands:**\n"
+    message += "__-------------------------__\n"
+    message += "|      **Basic Commands:**      |\n"
+    message += "__-------------------------__\n"
+    message += "| **`!help`**                 |\n"
+    message += "| **`!usage`**                |\n"
+    message += "__-------------------------__\n"
+    message += "|    **Resize Operations:**    |\n"
+    message += "__-------------------------__\n"
+    message += "| **`!resize_fill`**          |\n"
+    message += "| **`!resize_scale`**         |\n"
+    message += "| **`!limit`**                |\n"
+    message += "| **`!crop`**                 |\n"
+    message += "__-------------------------__\n"
+    message += "|           **Effects:**           |\n"
+    message += "__-------------------------__\n"
+    message += "| **`!blur_face`**            |\n"
+    message += "| **`!pixelate_portion`**     |\n"
+    message += "| **`!to_grayscale`**         |\n"
+    message += "__-------------------------__\n"
+    message += "|        **Layers Effects:**       |\n"
+    message += "__-------------------------__\n"
+    message += "| **`!add_text`**             |\n"
+    message += "__-------------------------__\n"
     return message
+
 
 def help(opreation):
     if opreation == "help":
@@ -83,6 +102,10 @@ def help(opreation):
     
     if opreation == "to_grayscale":
         msg = "Converts your images to grayscale.\n"
+        return msg
+    
+    if opreation == "add_text":
+        msg = "Customize text overlay's position by setting the gravity and the optional offset of the x and y. While the default text positioning ('gravity') is center, you can place your text in any other area of the image (even outside the image's boundaries!).\n"
         return msg
 
 def resize(img, width, height):
@@ -148,6 +171,16 @@ def to_grayscale(img):
     url, options = cloudinary_url(random_string, effect="grayscale")
     return url
 
+def add_text(img, color_code, font_family, font_size, position, text):
+    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    while random_string in r_id:
+        random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    r_id.append(random_string)
+    upload(img, public_id=random_string)
+    url, options = cloudinary_url(random_string, overlay={"font_family":font_family, "font_size":font_size, "text":text, "color":color_code},  gravity=position)
+    return url
+
+
 # discord
 @client.event
 async def on_message(message):
@@ -192,8 +225,8 @@ async def on_message(message):
         user = message.author
         guild = message.guild
         if is_verified(user, guild):
-            lst = message.content.split(" ")
             try:
+                lst = message.content.split(" ")
                 img = message.attachments[0].url
                 width = int(lst[1])
                 height = int(lst[2])
@@ -208,8 +241,8 @@ async def on_message(message):
         user = message.author
         guild = message.guild
         if is_verified(user, guild):
-            lst = message.content.split(" ")
             try:
+                lst = message.content.split(" ")
                 img = message.attachments[0].url
                 width = int(lst[1])
                 height = int(lst[2])
@@ -224,8 +257,8 @@ async def on_message(message):
         user = message.author
         guild = message.guild
         if is_verified(user, guild):
-            lst = message.content.split(" ")
             try:
+                lst = message.content.split(" ")
                 img = message.attachments[0].url
                 width = int(lst[1])
                 height = int(lst[2])
@@ -240,8 +273,8 @@ async def on_message(message):
         user = message.author
         guild = message.guild
         if is_verified(user, guild):
-            lst = message.content.split(" ")
             try:
+                lst = message.content.split(" ")
                 img = message.attachments[0].url
                 x = int(lst[1])
                 y = int(lst[2])
@@ -271,8 +304,8 @@ async def on_message(message):
         user = message.author
         guild = message.guild
         if is_verified(user, guild):
-            lst = message.content.split(" ")
             try:
+                lst = message.content.split(" ")
                 img = message.attachments[0].url
                 x = int(lst[1])
                 y = int(lst[2])
@@ -289,8 +322,8 @@ async def on_message(message):
         user = message.author
         guild = message.guild
         if is_verified(user, guild):
-            lst = message.content.split(" ")
             try:
+                lst = message.content.split(" ")
                 img = message.attachments[0].url
                 url = to_grayscale(img)
                 await message.reply(url)
@@ -298,5 +331,26 @@ async def on_message(message):
                 await message.reply("Image not provided or Invalid dimensions, Please Try Again!!!")
         else:
             await message.reply("You are not verified yet, please verify yourself by typing !verify")
-            
+
+    if "!add_text" in message.content:
+        user = message.author
+        guild = message.guild
+        if is_verified(user, guild):
+            try:
+                lst = message.content.split(" ")
+                img = message.attachments[0].url
+                color_code = lst[1]
+                font_family = lst[2]
+                font_size = int(lst[3])
+                position = lst[4]
+                text = lst[5]
+                url = add_text(img, color_code, font_family, font_size, position, text)
+                await message.reply(url)
+            except:
+                await message.reply("Image not provided or Invalid dimensions, Please Try Again!!!")
+        else:
+            await message.reply("You are not verified yet, please verify yourself by typing !verify")
+
+    
+
 client.run(token)
