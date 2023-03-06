@@ -10,3 +10,5 @@ A discord bot which can help you work/experiment with images using Cloudinary AP
 ### Step3: Head over to (Cloudinary)[https://cloudinary.com/] and get the api and secret key and paste it into the code.
 
 ### Step4: Run the bot and wait for 5-10 seconds for the bot to become online.
+
+### Step5: Run `!verify` to get User role(Server admin must create this role) and then `!commands` to check all available commands.
