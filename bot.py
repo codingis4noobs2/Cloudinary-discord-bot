@@ -11,13 +11,13 @@ import string
 r_id = []
 
 # discord token
-token = "your_discord_token_here"
+token = "your_discord_token"
 
 # cloudinary configs
 cloudinary.config(
-	cloud_name = "cloud_name",
+	cloud_name = "your_cloud_name",
 	api_key = "your_api_key",
-	api_secret = "your_secret_key",
+	api_secret = "your_api_secret",
 	secure = True
 )
 
@@ -43,31 +43,17 @@ def line():
     print("__----------------------------------__\n")
 
 def coms():
-    message = "__-------------------------__\n"
-    message += " **Available Commands:**\n"
-    message += "__-------------------------__\n"
-    message += "|      **Basic Commands:**      |\n"
-    message += "__-------------------------__\n"
-    message += "| **`!help`**                 |\n"
-    message += "| **`!usage`**                |\n"
-    message += "__-------------------------__\n"
-    message += "|    **Resize Operations:**    |\n"
-    message += "__-------------------------__\n"
-    message += "| **`!resize_fill`**          |\n"
-    message += "| **`!resize_scale`**         |\n"
-    message += "| **`!limit`**                |\n"
-    message += "| **`!crop`**                 |\n"
-    message += "__-------------------------__\n"
-    message += "|           **Effects:**           |\n"
-    message += "__-------------------------__\n"
-    message += "| **`!blur_face`**            |\n"
-    message += "| **`!pixelate_portion`**     |\n"
-    message += "| **`!to_grayscale`**         |\n"
-    message += "__-------------------------__\n"
-    message += "|        **Layers Effects:**       |\n"
-    message += "__-------------------------__\n"
-    message += "| **`!add_text`**             |\n"
-    message += "__-------------------------__\n"
+    message = ""
+    message += "**`!help`**\n"
+    message += "**`!usage`**\n"
+    message += "**`!resize_fill`**\n"
+    message += "**`!resize_scale`**\n"
+    message += "**`!limit`**\n"
+    message += "**`!crop`**\n"
+    message += "**`!blur_face`**\n"
+    message += "**`!pixelate_portion`**\n"
+    message += "**`!to_grayscale`**\n"
+    message += "**`!add_text`**\n"
     return message
 
 
@@ -114,7 +100,7 @@ def resize(img, width, height):
         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     r_id.append(random_string)
     upload(img, public_id=random_string)
-    url, options = cloudinary_url(random_string, width=100, height=150, crop="fill")
+    url, options = cloudinary_url(random_string, width=width, height=height, crop="fill")
     return url
 
 def resize_scale(img, width, height):
@@ -123,7 +109,7 @@ def resize_scale(img, width, height):
         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     r_id.append(random_string)
     upload(img, public_id=random_string)
-    url, options = cloudinary_url(random_string, width=100, height=150, crop="scale")
+    url, options = cloudinary_url(random_string, width=width, height=height, crop="scale")
     return url
 
 def limit(img, width, height):
@@ -132,7 +118,7 @@ def limit(img, width, height):
         random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
     r_id.append(random_string)
     upload(img, public_id=random_string)
-    url, options = cloudinary_url(random_string, width=100, height=150, crop="limit")
+    url, options = cloudinary_url(random_string, width=width, height=height, crop="limit")
     return url
 
 def crop(img, x, y, width, height):
