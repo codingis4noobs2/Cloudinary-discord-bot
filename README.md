@@ -19,3 +19,11 @@ A discord bot which can help you work/experiment with images using Cloudinary AP
 ![image](https://user-images.githubusercontent.com/87560178/223121234-9faab9f0-70b3-46b3-aaa4-675191b78051.png)
 ![image](https://user-images.githubusercontent.com/87560178/223121258-c110bb14-6e85-4867-bced-e2ad29a9bbab.png)
 ![image](https://user-images.githubusercontent.com/87560178/223121288-cfe564be-dcb9-4afc-92cc-3493163bb393.png)
+
+# OR You can run it on replit:
+
+### Step1: Go to https://replit.com/@ParthShah38/Cloudinary-Bot?v=1
+
+### Step2: Add Bot to your server: [Invite Bot](https://discord.com/api/oauth2/authorize?client_id=1081880898976362576&permissions=268823616&scope=bot)
+
+### Step3: Run main.py file and play with the bot :)
